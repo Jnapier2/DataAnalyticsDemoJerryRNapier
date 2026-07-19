@@ -36,6 +36,7 @@ The City of Chicago's terms apply to the source data. No separate license is ass
 - Outcome shares use all inspection records in a ZIP code as the denominator, including statuses other than `Pass`, `Fail`, and `Pass w/ Conditions`.
 - Risk shares use records classified as `Risk 1 (High)`, `Risk 2 (Medium)`, or `Risk 3 (Low)` as the denominator. Unclassified values are reported separately and excluded from those percentages.
 - Annual failure share is the number of `Fail` records divided by all inspection records in the same ZIP code and calendar year.
+- Study scope and category order are centralized in one visible notebook parameter block (`ZIP_CODES`, `EXPECTED_ROWS`, `START_DATE`, `END_DATE`, `RISK_ORDER`, and `RESULT_ORDER`) so changes to the analytical frame are explicit and reviewable.
 - Inspection identifiers, dates, ZIP-code scope, category coverage, missingness, and percentage totals are checked before results are produced.
 
 ## Results
