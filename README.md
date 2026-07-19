@@ -4,7 +4,7 @@
 
 ## Abstract
 
-This descriptive study compares recorded food-inspection outcomes and facility-risk classifications in Chicago ZIP codes 60607, 60610, and 60622. The study period runs from January 5, 2010, through June 13, 2018. Each row represents an inspection, not a unique establishment.
+This descriptive study compares recorded food-inspection outcomes and facility-risk classifications in Chicago ZIP codes 60607, 60610, and 60622 from January 5, 2010, through June 13, 2018. Across 13,333 inspection records, 60622 has the highest recorded failure share, while 60607 has the highest share classified as `Risk 1 (High)`. The divergence within this extract shows why outcome and facility-risk measures should be evaluated separately when framing follow-up analysis. Each row represents an inspection, not a unique establishment.
 
 This analysis originated as a 2018 course project. The 2026 revision updates the documentation and reproducibility workflow while retaining the original study period and descriptive scope. The original notebook reported 12,971 records. The bundled extract, retrieved from the same public dataset on July 19, 2026, contains 13,333 records for that period. The City dataset can be revised after publication, and the original CSV is no longer available, so the source of that difference cannot be established from the surviving files.
 
@@ -48,7 +48,7 @@ The executed notebook is the authoritative record of the calculations. The princ
 | 60610 | 3,553 | 54.35% | 18.77% | 14.89% | 81.48% |
 | 60622 | 5,338 | 57.76% | 21.54% | 8.77% | 76.85% |
 
-ZIP code 60622 has the highest recorded failure share, while ZIP code 60607 has the highest share of inspections classified as `Risk 1 (High)`. These are inspection-level distributions; they should not be read as establishment-level safety estimates.
+The leading ZIP differs by measure: 60622 has the highest recorded failure share, while 60607 has the highest share of inspections classified as `Risk 1 (High)`. For program managers, that divergence is the central finding because inspection outcome and facility-risk classification answer different questions. The results can focus the next analytical review, but they are not a basis for ranking ZIP codes or allocating resources without establishment-level linkage and adjustment for inspection type, repeat visits, and risk-based inspection frequency.
 
 ## Limitations
 
