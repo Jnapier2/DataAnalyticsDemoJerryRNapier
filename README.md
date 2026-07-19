@@ -1,0 +1,92 @@
+# Chicago Food Inspection Outcomes in Three ZIP Codes, 2010–2018
+
+[![Notebook validation](https://github.com/Jnapier2/DataAnalyticsDemoJerryRNapier/actions/workflows/notebook.yml/badge.svg)](https://github.com/Jnapier2/DataAnalyticsDemoJerryRNapier/actions/workflows/notebook.yml)
+
+## Abstract
+
+This descriptive study compares recorded food-inspection outcomes and facility-risk classifications in Chicago ZIP codes 60607, 60610, and 60622. The study period runs from January 5, 2010, through June 13, 2018. Each row represents an inspection, not a unique establishment.
+
+This analysis originated as a 2018 course project. The 2026 revision updates the documentation and reproducibility workflow while retaining the original study period and descriptive scope. The original notebook reported 12,971 records. The bundled extract, retrieved from the same public dataset on July 19, 2026, contains 13,333 records for that period. The City dataset can be revised after publication, and the original CSV is no longer available, so the source of that difference cannot be established from the surviving files.
+
+## Research questions
+
+1. How are inspection outcomes distributed within each selected ZIP code?
+2. What share of inspections in each ZIP code carries each recognized facility-risk classification?
+3. How did the recorded failure share vary by year within the study period?
+
+The questions are descriptive. They do not support a ranking of restaurant safety or a causal interpretation.
+
+## Data and provenance
+
+The source is the City of Chicago's [Food Inspections dataset](https://data.cityofchicago.org/Health-Human-Services/Food-Inspections/4ijn-s7e5), maintained by the Chicago Department of Public Health. The repository includes a compressed, analysis-specific snapshot so the notebook can run without network access. The exact query, selected fields, validation checks, and refresh procedure are documented in [`data/README.md`](data/README.md).
+
+The snapshot retains only these fields:
+
+- inspection identifier;
+- facility type and risk classification;
+- ZIP code;
+- inspection date and type; and
+- recorded result.
+
+The City of Chicago's terms apply to the source data. No separate license is asserted here for the data.
+
+## Methods
+
+- The unit of analysis is an inspection record. An establishment may appear more than once.
+- Outcome shares use all inspection records in a ZIP code as the denominator, including statuses other than `Pass`, `Fail`, and `Pass w/ Conditions`.
+- Risk shares use records classified as `Risk 1 (High)`, `Risk 2 (Medium)`, or `Risk 3 (Low)` as the denominator. Unclassified values are reported separately and excluded from those percentages.
+- Annual failure share is the number of `Fail` records divided by all inspection records in the same ZIP code and calendar year.
+- Inspection identifiers, dates, ZIP-code scope, category coverage, missingness, and percentage totals are checked before results are produced.
+
+## Results
+
+The executed notebook is the authoritative record of the calculations. The principal results from the bundled snapshot are:
+
+| ZIP code | Inspections | Pass | Fail | Pass with conditions | Risk 1 among classified records |
+|---|---:|---:|---:|---:|---:|
+| 60607 | 4,442 | 60.15% | 20.53% | 10.47% | 82.70% |
+| 60610 | 3,553 | 54.35% | 18.77% | 14.89% | 81.48% |
+| 60622 | 5,338 | 57.76% | 21.54% | 8.77% | 76.85% |
+
+ZIP code 60622 has the highest recorded failure share, while ZIP code 60607 has the highest share of inspections classified as `Risk 1 (High)`. These are inspection-level distributions; they should not be read as establishment-level safety estimates.
+
+## Limitations
+
+- Inspections are repeated observations, and facilities are not sampled at equal rates.
+- Inspection frequency depends partly on facility risk and inspection history.
+- Inspection-type composition differs across place and time.
+- The selected ZIP codes reflect the scope of the original course project and are not representative of Chicago as a whole.
+- Historical records may be corrected or added by the source agency after the initial extract.
+- The study period ends before the City's July 1, 2018 change in food-inspection procedures.
+
+## Reproducibility
+
+The notebook is tested with Python 3.12.
+
+```bash
+python -m venv .venv
+python -m pip install -r requirements.txt
+python -m jupyter nbconvert --execute --to notebook --inplace notebooks/chicago_food_inspections.ipynb
+```
+
+To refresh the snapshot from the official API:
+
+```bash
+python scripts/fetch_data.py
+```
+
+A refresh may change the record count or calculated shares if the City has revised historical records. Commit a refreshed snapshot only with an updated retrieval date, checksum, and executed notebook.
+
+## Repository structure
+
+- `notebooks/chicago_food_inspections.ipynb` — methods, checks, results, figures, and interpretation;
+- `data/food_inspections_2010_2018.csv.gz` — bounded source snapshot used by the notebook;
+- `data/README.md` — provenance, query definition, and integrity metadata;
+- `scripts/fetch_data.py` — deterministic retrieval and validation; and
+- `.github/workflows/notebook.yml` — clean-environment notebook execution.
+
+## Citation and acknowledgment
+
+Napier, Jerry R. *Chicago Food Inspection Outcomes in Three ZIP Codes, 2010–2018*. Revised 2026.
+
+Source data: City of Chicago, Chicago Department of Public Health, *Food Inspections*, dataset `4ijn-s7e5`.
