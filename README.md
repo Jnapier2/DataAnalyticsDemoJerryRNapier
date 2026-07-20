@@ -83,8 +83,9 @@ A refresh may change the record count or calculated shares if the City has revis
 - `notebooks/chicago_food_inspections.ipynb` — methods, checks, results, figures, and interpretation;
 - `data/food_inspections_2010_2018.csv.gz` — bounded source snapshot used by the notebook;
 - `data/README.md` — provenance, query definition, and integrity metadata;
-- `scripts/fetch_data.py` — deterministic retrieval and validation; and
-- `.github/workflows/notebook.yml` — clean-environment notebook execution.
+- `scripts/fetch_data.py` — deterministic retrieval and validation;
+- `tests/test_fetch_data.py` — offline query and date-boundary regression tests; and
+- `.github/workflows/notebook.yml` — clean-environment contract tests and notebook execution.
 
 ## Citation and acknowledgment
 

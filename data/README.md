@@ -7,7 +7,7 @@
 - Retrieved: July 19, 2026
 - Unit: one food-inspection record
 - ZIP codes: 60607, 60610, and 60622
-- Date filter: `inspection_date < 2018-06-14T00:00:00.000`
+- Date filter: `inspection_date >= 2010-01-05T00:00:00.000` and `inspection_date < 2018-06-14T00:00:00.000`
 - Sort order: `inspection_id`
 - Rows: 13,333
 - Selected fields: `inspection_id`, `facility_type`, `risk`, `zip`, `inspection_date`, `inspection_type`, `results`
@@ -23,6 +23,6 @@ Run the deterministic retrieval script from the repository root:
 python scripts/fetch_data.py
 ```
 
-The script validates the header, row identifiers, ZIP-code scope, and date boundary before replacing the snapshot. It prints the row count and SHA-256 checksum needed to update this file.
+The script validates the header, row identifiers, ZIP-code scope, and both date boundaries before replacing the snapshot. Offline regression tests also confirm the exact Socrata query and inclusive-start/exclusive-end behavior. It prints the row count and SHA-256 checksum needed to update this file.
 
 The City of Chicago's terms apply to the source data. This repository does not grant a separate license for the snapshot.

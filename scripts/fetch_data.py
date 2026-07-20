@@ -26,6 +26,7 @@ FIELDS = (
     "results",
 )
 ZIP_CODES = {"60607", "60610", "60622"}
+START_INCLUSIVE = datetime.fromisoformat("2010-01-05T00:00:00.000")
 END_EXCLUSIVE = datetime.fromisoformat("2018-06-14T00:00:00.000")
 ROW_LIMIT = 50_000
 DEFAULT_OUTPUT = Path("data/food_inspections_2010_2018.csv.gz")
@@ -34,11 +35,14 @@ DEFAULT_OUTPUT = Path("data/food_inspections_2010_2018.csv.gz")
 def build_url() -> str:
     """Return the complete, bounded Socrata query URL."""
 
+    start = START_INCLUSIVE.isoformat(timespec="milliseconds")
+    end = END_EXCLUSIVE.isoformat(timespec="milliseconds")
     parameters = {
         "$select": ",".join(FIELDS),
         "$where": (
             "zip in (60607,60610,60622) "
-            "and inspection_date < '2018-06-14T00:00:00.000'"
+            f"and inspection_date >= '{start}' "
+            f"and inspection_date < '{end}'"
         ),
         "$order": "inspection_id",
         "$limit": str(ROW_LIMIT),
@@ -58,7 +62,7 @@ def fetch_csv(timeout: int) -> bytes:
 
 
 def validate_csv(content: bytes) -> tuple[int, str]:
-    """Validate schema, identifiers, ZIP scope, and study-period boundary."""
+    """Validate schema, identifiers, ZIP scope, and study-period bounds."""
 
     decoded = content.decode("utf-8-sig")
     reader = csv.DictReader(io.StringIO(decoded))
@@ -84,7 +88,7 @@ def validate_csv(content: bytes) -> tuple[int, str]:
         observed_zips.add(zip_code)
 
         inspection_date = datetime.fromisoformat(row["inspection_date"].strip())
-        if inspection_date >= END_EXCLUSIVE:
+        if not START_INCLUSIVE <= inspection_date < END_EXCLUSIVE:
             raise ValueError(f"Out-of-scope date at CSV line {line_number}")
 
     if not row_count or row_count >= ROW_LIMIT:
