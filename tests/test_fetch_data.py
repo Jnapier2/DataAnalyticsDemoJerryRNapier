@@ -75,6 +75,19 @@ class FetchDataContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Out-of-scope date at CSV line 4"):
             fetch_data.validate_csv(content)
 
+    def test_unknown_result_category_is_rejected(self) -> None:
+        content = self.csv_bytes(
+            "2010-01-05T00:00:00.000",
+            "2014-01-01T12:00:00.000",
+            "2018-06-13T23:59:59.999",
+        )
+        content = content.replace(b",Pass\r\n", b",Conditional Hold\r\n", 1)
+
+        with self.assertRaisesRegex(
+            ValueError, "Unexpected inspection result at CSV line 2"
+        ):
+            fetch_data.validate_csv(content)
+
 
 if __name__ == "__main__":
     unittest.main()

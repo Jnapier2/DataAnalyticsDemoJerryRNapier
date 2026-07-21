@@ -15,6 +15,8 @@
 
 The date boundary preserves the original project's last observed inspection date. The source may revise historical records; the 2018 notebook reported 12,971 rows, while this snapshot contains 13,333. Because the original CSV is absent, the exact revisions cannot be reconstructed.
 
+The City notes that duplicate inspection reports may remain in the public dataset. This bounded snapshot has unique inspection identifiers, but no establishment-level deduplication is applied across separate inspection records.
+
 ## Retrieval
 
 Run the deterministic retrieval script from the repository root:
