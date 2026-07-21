@@ -54,6 +54,7 @@ The leading ZIP differs by measure: 60622 has the highest recorded failure share
 ## Limitations
 
 - Inspections are repeated observations, and facilities are not sampled at equal rates.
+- The City notes that duplicate inspection reports may remain in the public dataset; this snapshot has unique inspection identifiers, but the analysis does not attempt establishment-level deduplication across separate inspection records.
 - Inspection frequency depends partly on facility risk and inspection history.
 - Inspection-type composition differs across place and time.
 - The selected ZIP codes reflect the scope of the original course project and are not representative of Chicago as a whole.

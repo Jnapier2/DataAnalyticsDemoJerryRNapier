@@ -26,6 +26,15 @@ FIELDS = (
     "results",
 )
 ZIP_CODES = {"60607", "60610", "60622"}
+EXPECTED_RESULTS = {
+    "Business Not Located",
+    "Fail",
+    "No Entry",
+    "Not Ready",
+    "Out of Business",
+    "Pass",
+    "Pass w/ Conditions",
+}
 START_INCLUSIVE = datetime.fromisoformat("2010-01-05T00:00:00.000")
 END_EXCLUSIVE = datetime.fromisoformat("2018-06-14T00:00:00.000")
 ROW_LIMIT = 50_000
@@ -72,6 +81,7 @@ def validate_csv(content: bytes) -> tuple[int, str]:
     identifiers: set[str] = set()
     row_count = 0
     observed_zips: set[str] = set()
+    observed_results: set[str] = set()
 
     for line_number, row in enumerate(reader, start=2):
         row_count += 1
@@ -87,6 +97,11 @@ def validate_csv(content: bytes) -> tuple[int, str]:
             raise ValueError(f"Out-of-scope ZIP code at CSV line {line_number}")
         observed_zips.add(zip_code)
 
+        result = row["results"].strip()
+        if result not in EXPECTED_RESULTS:
+            raise ValueError(f"Unexpected inspection result at CSV line {line_number}")
+        observed_results.add(result)
+
         inspection_date = datetime.fromisoformat(row["inspection_date"].strip())
         if not START_INCLUSIVE <= inspection_date < END_EXCLUSIVE:
             raise ValueError(f"Out-of-scope date at CSV line {line_number}")
@@ -95,6 +110,8 @@ def validate_csv(content: bytes) -> tuple[int, str]:
         raise ValueError(f"Unexpected row count: {row_count}")
     if observed_zips != ZIP_CODES:
         raise ValueError(f"Incomplete ZIP-code coverage: {sorted(observed_zips)}")
+    if not observed_results:
+        raise ValueError("No inspection results found")
 
     return row_count, hashlib.sha256(content).hexdigest()
 
