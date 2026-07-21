@@ -1,6 +1,6 @@
 # Chicago Food Inspection Outcomes in Three ZIP Codes, 2010–2018
 
-[![Notebook validation](https://github.com/Jnapier2/DataAnalyticsDemoJerryRNapier/actions/workflows/notebook.yml/badge.svg)](https://github.com/Jnapier2/DataAnalyticsDemoJerryRNapier/actions/workflows/notebook.yml)
+[![Notebook validation](https://github.com/Jnapier2/chicago-food-inspections-analysis/actions/workflows/notebook.yml/badge.svg)](https://github.com/Jnapier2/chicago-food-inspections-analysis/actions/workflows/notebook.yml)
 
 ## Abstract
 
