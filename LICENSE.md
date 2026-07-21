@@ -1,6 +1,6 @@
 # All Rights Reserved
 
-Copyright © 2026 Jerry R. Napier. All rights reserved.
+Copyright © 2026 Gateway Information Group LLC. All rights reserved.
 
 No open-source license is granted for the notebook, retrieval script, documentation, or other original work in this repository.
 
